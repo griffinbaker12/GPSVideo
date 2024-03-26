@@ -5,9 +5,21 @@ struct ContentView: View {
 
     var body: some View {
         VStack {
-            if let location = locationManager.currentLocation {
-                Text("Latitude: \(location.latitude)")
-                Text("Longitude: \(location.longitude)")
+            if let location  = locationManager.currentLocation {
+                if locationManager.isTracking {
+                    Text("Latitude: \(location.latitude)")
+                        .padding()
+                    Text("Longitude: \(location.longitude)")
+                        .padding()
+                    if let mostRecentTime = locationManager.lastUpdateTime {
+                        Text("Last Update Time: \(mostRecentTime)")
+                            .multilineTextAlignment(.center)
+                            .padding()
+                    }
+                } else {
+                    Text("Press the 'Start Tracking' button to see your coordinates")
+                        .multilineTextAlignment(.center)
+                }
             } else {
                 Text("Location data is not available.")
             }
@@ -28,8 +40,14 @@ struct ContentView: View {
                     .padding()
                     .background(locationManager.isTracking ? Color.red : Color.blue)
                     .cornerRadius(8)
+                    .animation(nil, value: locationManager.isTracking)
             }
+            .padding()
         }
         .padding()
     }
+}
+
+#Preview {
+    ContentView()
 }

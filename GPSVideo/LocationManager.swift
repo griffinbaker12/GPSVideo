@@ -11,7 +11,7 @@ import CoreLocation
 class LocationManager: NSObject, ObservableObject, CLLocationManagerDelegate {
     private var locationManager = CLLocationManager()
     @Published var currentLocation: CLLocationCoordinate2D?
-    private var lastUpdateTime: Date?
+    @Published var lastUpdateTime: Date?
     @Published var timeDifferenceInSeconds: TimeInterval = 0
     @Published var isTracking: Bool = false
 
